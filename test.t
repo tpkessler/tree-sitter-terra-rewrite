@@ -13,7 +13,7 @@ p = double -> {X, Y}
 p = &{double} -> T
 c = [quote end]
 var b
--- var a: T -- This doesn't work yet
+var a: T -- This doesn't work yet
 local terra a :: X -> Y
 terra a.b :: {X, Y} -> {Z, W} 
 terra g :: ptr

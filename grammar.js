@@ -66,11 +66,20 @@ module.exports = grammar(lua, {
       ']'
     ),
 
-    typed_declaration: ($) => seq($.expression, ':', $.expression),
+    _terra_variable: ($) => choice(
+      $.identifier,
+      $.escape_expression,
+    ),
+
+    typed_declaration: ($) => seq(
+      field('name', $._terra_variable),
+      ':',
+      field('type', $.expression)
+    ),
 
     terra_declaration: ($) => seq(
       'var',
-      list_seq(choice($.expression, $.typed_declaration), ',')),
+      list_seq(choice($.identifier, $.typed_declaration), ',')),
 
     expression: ($, original) => choice(
       original,
@@ -97,8 +106,8 @@ module.exports = grammar(lua, {
       'float',
       'double',
       'opaque',
-      ...[8, 16, 32, 64].map(n => `int${n}_t`),
-      ...[8, 16, 32, 64].map(n => `uint${n}_t`),
+      ...[8, 16, 32, 64].map(n => `int${n}`),
+      ...[8, 16, 32, 64].map(n => `uint${n}`),
     )),
 
     type_specifier: ($) => choice(

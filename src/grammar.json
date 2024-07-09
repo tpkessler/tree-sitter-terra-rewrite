@@ -3268,20 +3268,41 @@
         }
       ]
     },
+    "_terra_variable": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "escape_expression"
+        }
+      ]
+    },
     "typed_declaration": {
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "expression"
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_terra_variable"
+          }
         },
         {
           "type": "STRING",
           "value": ":"
         },
         {
-          "type": "SYMBOL",
-          "name": "expression"
+          "type": "FIELD",
+          "name": "type",
+          "content": {
+            "type": "SYMBOL",
+            "name": "expression"
+          }
         }
       ]
     },
@@ -3300,7 +3321,7 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "expression"
+                  "name": "identifier"
                 },
                 {
                   "type": "SYMBOL",
@@ -3322,7 +3343,7 @@
                     "members": [
                       {
                         "type": "SYMBOL",
-                        "name": "expression"
+                        "name": "identifier"
                       },
                       {
                         "type": "SYMBOL",
@@ -3364,35 +3385,35 @@
           },
           {
             "type": "STRING",
-            "value": "int8_t"
+            "value": "int8"
           },
           {
             "type": "STRING",
-            "value": "int16_t"
+            "value": "int16"
           },
           {
             "type": "STRING",
-            "value": "int32_t"
+            "value": "int32"
           },
           {
             "type": "STRING",
-            "value": "int64_t"
+            "value": "int64"
           },
           {
             "type": "STRING",
-            "value": "uint8_t"
+            "value": "uint8"
           },
           {
             "type": "STRING",
-            "value": "uint16_t"
+            "value": "uint16"
           },
           {
             "type": "STRING",
-            "value": "uint32_t"
+            "value": "uint32"
           },
           {
             "type": "STRING",
-            "value": "uint64_t"
+            "value": "uint64"
           }
         ]
       }
