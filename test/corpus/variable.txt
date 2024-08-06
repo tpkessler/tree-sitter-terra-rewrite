@@ -1,0 +1,82 @@
+===
+Typed variable declaration
+===
+
+var a: T
+
+---
+
+(chunk
+  (terra_declaration
+    (typed_declaration
+      (identifier)
+      (identifier))))
+
+
+===
+Multiple variable declaration
+===
+
+var a: T, b: S
+
+---
+
+(chunk
+  (terra_declaration
+    (typed_declaration
+      (identifier)
+      (identifier))
+    (typed_declaration
+      (identifier)
+      (identifier))))
+
+===
+Untyped variable definition
+===
+
+var a = 1
+
+---
+
+(chunk
+  (terra_var_definition
+    (terra_declaration
+      (identifier))
+    (number)))
+
+===
+Typed variable definition
+===
+
+var a: T = 1
+
+---
+
+(chunk
+  (terra_var_definition
+    (terra_declaration
+      (typed_declaration
+        (identifier)
+        (identifier)))
+    (number)))
+
+===
+Typed multiple variable definition
+===
+
+var a: T, b: S = c, d
+
+---
+
+(chunk
+  (terra_var_definition
+    (terra_declaration
+      (typed_declaration
+        (identifier)
+        (identifier))
+      (typed_declaration
+        (identifier)
+        (identifier)))
+    (identifier)
+    (identifier)))
+

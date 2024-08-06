@@ -20,6 +20,10 @@
         "named": true
       },
       {
+        "type": "terra_var_definition",
+        "named": true
+      },
+      {
         "type": "variable_declaration",
         "named": true
       }
@@ -1155,6 +1159,25 @@
         },
         {
           "type": "method_index_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "terra_var_definition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "terra_declaration",
           "named": true
         }
       ]
