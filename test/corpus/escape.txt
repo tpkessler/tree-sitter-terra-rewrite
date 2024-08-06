@@ -1,0 +1,29 @@
+===
+Escape expression
+===
+
+a = [b]
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (escape_expression
+        (identifier)))))
+
+
+===
+Escape statement
+===
+
+[a]
+
+---
+
+(chunk
+  (escape_expression
+    (identifier)))
+

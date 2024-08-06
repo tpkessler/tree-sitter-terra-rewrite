@@ -1,0 +1,167 @@
+===
+Function pointer
+===
+
+a = T -> T
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (function_pointer_expression
+        (identifier)
+        (identifier)))))
+
+
+===
+Function pointer empty return
+===
+
+a = T -> {}
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (function_pointer_expression
+        (identifier)
+        (table_constructor)))))
+
+===
+Function pointer multiple args
+===
+
+a = {T, S} -> T
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (function_pointer_expression
+        (table_constructor
+          (field
+            (identifier))
+          (field
+            (identifier)))
+        (identifier)))))
+
+
+===
+Function pointer multiple returns
+===
+
+a = T -> {T, S}
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (function_pointer_expression
+        (identifier)
+        (table_constructor
+          (field
+            (identifier))
+          (field
+            (identifier)))))))
+
+===
+Function pointer multiple args and returns
+===
+
+a = {S, T} -> {U, V, W}
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (function_pointer_expression
+        (table_constructor
+          (field
+            (identifier))
+          (field
+            (identifier)))
+        (table_constructor
+          (field
+            (identifier))
+          (field
+            (identifier))
+          (field
+            (identifier)))))))
+
+===
+Function declaration
+===
+
+terra a :: {} -> {}
+
+---
+
+(chunk
+  (terra_function_declaration
+    (identifier)
+    (function_pointer_expression
+      (table_constructor)
+      (table_constructor))))
+
+===
+Function declaration with variable signature
+===
+
+terra a :: ptr
+
+---
+
+(chunk
+  (terra_function_declaration
+    (identifier)
+    (identifier)))
+
+
+===
+Struct method declaration
+===
+
+terra a:b :: T -> T
+
+---
+
+(chunk
+  (terra_function_declaration
+    (method_index_expression
+      (identifier)
+      (identifier))
+    (function_pointer_expression
+      (identifier)
+      (identifier))))
+
+
+===
+Local function declaration
+===
+
+local terra a :: {} -> {}
+
+---
+
+(chunk
+  (local_terra_function_declaration
+    (identifier)
+    (function_pointer_expression
+      (table_constructor)
+      (table_constructor))))
+

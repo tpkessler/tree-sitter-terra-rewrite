@@ -145,6 +145,10 @@
               "name": "declaration"
             }
           ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "escape_expression"
         }
       ]
     },
@@ -3325,6 +3329,10 @@
                 },
                 {
                   "type": "SYMBOL",
+                  "name": "escape_expression"
+                },
+                {
+                  "type": "SYMBOL",
                   "name": "typed_declaration"
                 }
               ]
@@ -3344,6 +3352,10 @@
                       {
                         "type": "SYMBOL",
                         "name": "identifier"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "escape_expression"
                       },
                       {
                         "type": "SYMBOL",

@@ -1,0 +1,70 @@
+===
+Empty quote
+===
+
+a = quote end
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      name: (identifier))
+    (expression_list
+      value: (quote_expression))))
+
+===
+Quote statement
+===
+
+a = quote foo end
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      name: (identifier))
+    (expression_list
+      value: (quote_expression
+        (identifier)))))
+
+===
+Full quote 
+===
+
+a = quote a = b in c end
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (quote_expression
+        (full_quote_statement
+          (block
+            (assignment_statement
+              (variable_list
+                (identifier))
+              (expression_list
+                (identifier))))
+          (identifier))))))
+
+===
+Short quote
+===
+
+a = `b
+
+---
+
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (short_quote_expression
+        (identifier)))))

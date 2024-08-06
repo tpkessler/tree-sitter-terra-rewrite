@@ -1,5 +1,5 @@
 a = quote foo end
-b = quote end
+--[[
 c = `d
 d = &a
 var a, b
@@ -18,3 +18,4 @@ local terra a :: X -> Y
 terra a.b :: {X, Y} -> {Z, W} 
 terra g :: ptr
 terra tab.g :: ptr
+--]]

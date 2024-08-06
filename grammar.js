@@ -79,7 +79,8 @@ module.exports = grammar(lua, {
 
     terra_declaration: ($) => seq(
       'var',
-      list_seq(choice($.identifier, $.typed_declaration), ',')),
+      list_seq(choice($.identifier, $.escape_expression, $.typed_declaration), ',')
+    ),
 
     expression: ($, original) => choice(
       original,
@@ -91,6 +92,7 @@ module.exports = grammar(lua, {
 
     statement: ($, original) => choice(
       original,
+      $.escape_expression
     ),
 
     declaration: ($, original) => choice(

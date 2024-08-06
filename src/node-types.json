@@ -124,6 +124,10 @@
         "named": true
       },
       {
+        "type": "escape_expression",
+        "named": true
+      },
+      {
         "type": "for_statement",
         "named": true
       },
@@ -1114,6 +1118,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "escape_expression",
+          "named": true
+        },
         {
           "type": "identifier",
           "named": true
