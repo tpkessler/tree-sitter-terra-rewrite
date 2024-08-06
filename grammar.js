@@ -71,7 +71,7 @@ module.exports = grammar(lua, {
       $.escape_expression,
     ),
 
-    typed_declaration: ($) => seq(
+    _typed_declaration: ($) => seq(
       field('name', $._terra_variable),
       ':',
       field('type', $.expression)
@@ -79,13 +79,61 @@ module.exports = grammar(lua, {
 
     terra_declaration: ($) => seq(
       'var',
-      list_seq(choice($.identifier, $.escape_expression, $.typed_declaration), ',')
+      list_seq(choice($.identifier, $.escape_expression, $._typed_declaration), ',')
     ),
 
     terra_var_definition: ($) => seq(
       $.terra_declaration,
       '=',
       $._expression_list
+    ),
+
+    escape_statement: ($) => seq(
+      'escape',
+      field('body', optional_block($)),
+      'end'
+    ),
+
+    emit_statement: ($) => seq(
+      'emit',
+      $.expression
+    ),
+
+
+    _union_body: ($) => list_seq(
+        $._typed_declaration,
+        /[,\n]/,
+        true
+    ),
+
+    union_declaration: ($) => seq(
+      'union',
+      '{',
+      $._union_body,
+      '}'
+    ),
+
+    _struct_body: ($) => list_seq(
+      choice($.union_declaration, $._typed_declaration),
+      /[,\n]/,
+      true
+    ),
+
+    struct_declaration: ($) => seq(
+        'struct',
+        field('name', $._function_name),
+        '{',
+        optional(field('body', $._struct_body)),
+        '}'
+    ),
+
+    local_struct_declaration: ($) => seq(
+        'local',
+        'struct',
+        field('name', $.identifier),
+        '{',
+        optional(field('body', $._struct_body)),
+        '}'
     ),
 
     expression: ($, original) => choice(
@@ -98,7 +146,9 @@ module.exports = grammar(lua, {
 
     statement: ($, original) => choice(
       original,
-      $.escape_expression
+      $.escape_expression,
+      $.escape_statement,
+      $.emit_statement,
     ),
 
     declaration: ($, original) => choice(
@@ -106,7 +156,9 @@ module.exports = grammar(lua, {
       $.terra_declaration,
       $.terra_var_definition,
       $.terra_function_declaration,
-      $.local_terra_function_declaration
+      $.local_terra_function_declaration,
+      $.struct_declaration,
+      $.local_struct_declaration,
     ),
 
     primitive_type: _ => token(choice(

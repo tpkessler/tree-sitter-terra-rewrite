@@ -1,0 +1,159 @@
+===
+Empty struct declaration
+===
+
+struct A {}
+
+---
+
+(chunk
+  (struct_declaration
+    (identifier)))
+
+===
+Local empty struct declaration
+===
+
+local struct A {}
+
+---
+
+(chunk
+  (local_struct_declaration
+    (identifier)))
+
+===
+Simple struct declaration
+===
+
+struct A {
+	a: T
+}
+
+---
+
+(chunk
+  (struct_declaration
+    (identifier)
+    (identifier)
+    (identifier)))
+
+===
+Multiple members struct declaration
+===
+
+struct A {
+	a: T
+	b: S
+}
+
+---
+
+(chunk
+  (struct_declaration
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)))
+
+===
+Multiple members inline struct declaration
+===
+
+struct A {a: T, b: S}
+
+---
+
+(chunk
+  (struct_declaration
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)))
+
+===
+Local struct declaration with members
+===
+
+local struct A {
+	a: T
+}
+
+---
+
+(chunk
+  (local_struct_declaration
+    (identifier)
+    (identifier)
+    (identifier)))
+
+===
+Struct as table entry
+===
+
+struct S.A {
+	a: T
+	b: S
+}
+
+---
+
+(chunk
+  (struct_declaration
+    (dot_index_expression
+      (identifier)
+      (identifier))
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)))
+
+===
+Struct with union
+===
+
+struct A {
+	union {
+		a: T
+		b: S
+	}
+}
+
+---
+
+(chunk
+  (struct_declaration
+    (identifier)
+    (union_declaration
+      (identifier)
+      (identifier)
+      (identifier)
+      (identifier))))
+
+===
+Struct with mixed union and types
+===
+
+struct A {
+	union {
+		a: T
+		b: S
+	}
+	c: U
+}
+
+---
+
+(chunk
+  (struct_declaration
+    (identifier)
+    (union_declaration
+      (identifier)
+      (identifier)
+      (identifier)
+      (identifier))
+    (identifier)
+    (identifier)))
+

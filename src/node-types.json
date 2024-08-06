@@ -8,7 +8,15 @@
         "named": true
       },
       {
+        "type": "local_struct_declaration",
+        "named": true
+      },
+      {
         "type": "local_terra_function_declaration",
+        "named": true
+      },
+      {
+        "type": "struct_declaration",
         "named": true
       },
       {
@@ -124,11 +132,19 @@
         "named": true
       },
       {
+        "type": "emit_statement",
+        "named": true
+      },
+      {
         "type": "empty_statement",
         "named": true
       },
       {
         "type": "escape_expression",
+        "named": true
+      },
+      {
+        "type": "escape_statement",
         "named": true
       },
       {
@@ -463,6 +479,21 @@
     }
   },
   {
+    "type": "emit_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "empty_statement",
     "named": true,
     "fields": {}
@@ -480,6 +511,22 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "escape_statement",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -864,6 +911,58 @@
     }
   },
   {
+    "type": "local_struct_declaration",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "union_declaration",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "escape_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "local_terra_function_declaration",
     "named": true,
     "fields": {},
@@ -1100,6 +1199,66 @@
     }
   },
   {
+    "type": "struct_declaration",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "union_declaration",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "dot_index_expression",
+            "named": true
+          },
+          {
+            "type": "escape_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "method_index_expression",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "table_constructor",
     "named": true,
     "fields": {},
@@ -1117,10 +1276,35 @@
   {
     "type": "terra_declaration",
     "named": true,
-    "fields": {},
+    "fields": {
+      "name": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "escape_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "escape_expression",
@@ -1128,10 +1312,6 @@
         },
         {
           "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "typed_declaration",
           "named": true
         }
       ]
@@ -1184,11 +1364,27 @@
     }
   },
   {
-    "type": "typed_declaration",
+    "type": "unary_expression",
+    "named": true,
+    "fields": {
+      "operand": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "union_declaration",
     "named": true,
     "fields": {
       "name": {
-        "multiple": false,
+        "multiple": true,
         "required": true,
         "types": [
           {
@@ -1202,23 +1398,7 @@
         ]
       },
       "type": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "expression",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "unary_expression",
-    "named": true,
-    "fields": {
-      "operand": {
-        "multiple": false,
+        "multiple": true,
         "required": true,
         "types": [
           {
@@ -1461,7 +1641,15 @@
     "named": false
   },
   {
+    "type": "emit",
+    "named": false
+  },
+  {
     "type": "end",
+    "named": false
+  },
+  {
+    "type": "escape",
     "named": false
   },
   {
@@ -1537,6 +1725,10 @@
     "named": false
   },
   {
+    "type": "struct",
+    "named": false
+  },
+  {
     "type": "terra",
     "named": false
   },
@@ -1547,6 +1739,10 @@
   {
     "type": "true",
     "named": true
+  },
+  {
+    "type": "union",
+    "named": false
   },
   {
     "type": "until",

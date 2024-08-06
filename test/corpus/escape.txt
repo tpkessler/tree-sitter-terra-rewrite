@@ -16,7 +16,7 @@ a = [b]
 
 
 ===
-Escape statement
+Short escape statement
 ===
 
 [a]
@@ -26,4 +26,62 @@ Escape statement
 (chunk
   (escape_expression
     (identifier)))
+
+
+===
+Escape statement
+===
+
+escape a = b end
+
+---
+
+(chunk
+  (escape_statement
+    (block
+      (assignment_statement
+        (variable_list
+          (identifier))
+        (expression_list
+          (identifier))))))
+
+===
+Emit statement
+===
+
+emit quote a end
+
+---
+
+(chunk
+  (emit_statement
+    (quote_expression
+      (identifier))))
+
+===
+Combined escape and emit statement
+===
+
+escape
+  for i = 1, n do
+    emit v[i]
+  end
+end
+
+---
+
+(chunk
+  (escape_statement
+    (block
+      (for_statement
+        (for_numeric_clause
+          (identifier)
+          (number)
+          (identifier))
+        (block
+          (emit_statement
+            (bracket_index_expression
+              (identifier)
+              (identifier))))))))
+
 
