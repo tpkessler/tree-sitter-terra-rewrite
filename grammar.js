@@ -175,6 +175,45 @@ module.exports = grammar(lua, {
       $.primitive_type,
     ),
 
+    // From the lua grammar with optional suffix for float or integer types
+    number: (_) => {
+      function number_literal(digits, exponent_marker, exponent_digits) {
+        return choice(
+          seq(digits, /U?LL/i),
+          seq(
+            choice(
+              seq(optional(digits), optional('.'), digits),
+              seq(digits, optional('.'), optional(digits))
+            ),
+            optional(
+              seq(
+                choice(
+                  exponent_marker.toLowerCase(),
+                  exponent_marker.toUpperCase()
+                ),
+                seq(optional(choice('-', '+')), exponent_digits),
+              )
+            ),
+            /[iIfFuUlL]*/
+          )
+        );
+      }
+
+      const decimal_digits = /[0-9]+/;
+      const decimal_literal = number_literal(
+        decimal_digits,
+        'e',
+        decimal_digits
+      );
+
+      const hex_digits = /[a-fA-F0-9]+/;
+      const hex_literal = seq(
+        choice('0x', '0X'),
+        number_literal(hex_digits, 'p', decimal_digits)
+      );
+
+      return token(choice(decimal_literal, hex_literal));
+    },
     // from the lua grammar, include '`' as an illegal token and
     // remove & from the identifier start as it's used for pointers
     identifier: (_) => {

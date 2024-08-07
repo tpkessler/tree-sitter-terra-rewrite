@@ -1393,25 +1393,8 @@
                     ]
                   },
                   {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "CHOICE",
-                        "members": [
-                          {
-                            "type": "STRING",
-                            "value": "i"
-                          },
-                          {
-                            "type": "STRING",
-                            "value": "I"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "BLANK"
-                      }
-                    ]
+                    "type": "PATTERN",
+                    "value": "[iIfFuUlL]*"
                   }
                 ]
               }
@@ -1581,25 +1564,8 @@
                         ]
                       },
                       {
-                        "type": "CHOICE",
-                        "members": [
-                          {
-                            "type": "CHOICE",
-                            "members": [
-                              {
-                                "type": "STRING",
-                                "value": "i"
-                              },
-                              {
-                                "type": "STRING",
-                                "value": "I"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "BLANK"
-                          }
-                        ]
+                        "type": "PATTERN",
+                        "value": "[iIfFuUlL]*"
                       }
                     ]
                   }

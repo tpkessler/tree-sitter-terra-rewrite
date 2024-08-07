@@ -1,0 +1,105 @@
+===
+Integer
+===
+
+a = 1235235
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (number))))
+
+===
+Double precision float
+===
+
+a = 1324.14142
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (number))))
+
+===
+Single precision float
+===
+
+a = 1234.124f
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (number))))
+
+===
+Long int
+===
+
+a = 124145l
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (number))))
+
+===
+Unsigned int
+===
+
+a = 23523u
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (number))))
+
+
+===
+Unsigned long int
+===
+
+a = 23523ul
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (number))))
+
+===
+Unsigned long long int
+===
+
+a = 23523525ull
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (number))))
