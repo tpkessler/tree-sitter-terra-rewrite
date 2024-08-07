@@ -12,6 +12,10 @@ module.exports = grammar(lua, {
   name: "terra",
 
   conflicts: ($) => [
+    // Function calls are expressions but with overloaded __apply()
+    // they can also be a variable and thus appear on the left hand
+    // site of an assignment statement.
+    [$.expression, $.variable],
   ],
 
   rules: {
@@ -60,6 +64,45 @@ module.exports = grammar(lua, {
       $.expression
     ),
 
+    terra_function_definition: ($) => seq(
+      'terra',
+      $._terra_function_body      
+    ),
+
+    terra_function_implementation: ($) => seq(
+      'terra',
+      field('name', $._function_name),
+      $._terra_function_body
+    ),
+
+    terra_local_function_implementation: ($) => seq(
+      'local',
+      'terra',
+      field('name', choice($.identifier, $.escape_expression)),
+      $._terra_function_body
+    ),
+
+    _terra_function_body: ($) => seq(
+      field('parameters', $.terra_function_parameters),
+      field('body', optional_block($)),
+      'end'
+    ),
+
+    terra_function_parameters: ($) => seq(
+      '(',
+      optional($._terra_parameter_list),
+      ')',
+      optional(seq(
+        ':',
+        $.expression
+      ))
+    ),
+
+    _terra_parameter_list: ($) => list_seq(
+      $._typed_declaration,
+      ',',
+    ),
+
     escape_expression: ($) => seq(
       '[',
       $.expression,
@@ -79,8 +122,15 @@ module.exports = grammar(lua, {
 
     terra_declaration: ($) => seq(
       'var',
-      list_seq(choice($.identifier, $.escape_expression, $._typed_declaration), ',')
+      list_seq(
+        choice($.identifier, $.escape_expression, $._typed_declaration),
+        ',')
     ),
+
+    function_call: ($, original) => prec(2, choice(
+      original,
+      seq($.escape_expression, field('arguments', $.arguments))
+    )),
 
     terra_var_definition: ($) => seq(
       $.terra_declaration,
@@ -98,7 +148,6 @@ module.exports = grammar(lua, {
       'emit',
       $.expression
     ),
-
 
     _union_body: ($) => list_seq(
         $._typed_declaration,
@@ -122,6 +171,11 @@ module.exports = grammar(lua, {
     struct_declaration: ($) => seq(
         'struct',
         field('name', $._function_name),
+        optional(seq(
+          '(',
+          field('base', $.identifier),
+          ')'
+        )),
         '{',
         optional(field('body', $._struct_body)),
         '}'
@@ -131,6 +185,11 @@ module.exports = grammar(lua, {
         'local',
         'struct',
         field('name', $.identifier),
+        optional(seq(
+          '(',
+          field('base', $.identifier),
+          ')'
+        )),
         '{',
         optional(field('body', $._struct_body)),
         '}'
@@ -142,6 +201,7 @@ module.exports = grammar(lua, {
       $.short_quote_expression,
       $.escape_expression,
       $.function_pointer_expression,
+      $.terra_function_definition,
     ),
 
     statement: ($, original) => choice(
@@ -159,6 +219,13 @@ module.exports = grammar(lua, {
       $.local_terra_function_declaration,
       $.struct_declaration,
       $.local_struct_declaration,
+      $.terra_function_implementation,
+      $.terra_local_function_implementation,
+    ),
+
+    variable: ($, original) => choice(
+      original,
+      $.function_call,
     ),
 
     primitive_type: _ => token(choice(

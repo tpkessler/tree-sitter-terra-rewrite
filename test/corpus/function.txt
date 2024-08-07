@@ -165,3 +165,234 @@ local terra a :: {} -> {}
       (table_constructor)
       (table_constructor))))
 
+===
+Empty function definition assignment
+===
+
+a = terra() end
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (terra_function_definition
+        (terra_function_parameters)))))
+
+===
+Function definition assignment with parameters
+===
+
+a = terra(x: T) return x end
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (terra_function_definition
+        (terra_function_parameters
+          (identifier)
+          (identifier))
+        (block
+          (return_statement
+            (expression_list
+              (identifier))))))))
+
+===
+Function definition with return value
+===
+
+a = terra(x: T): S end
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (terra_function_definition
+        (terra_function_parameters
+          (identifier)
+          (identifier)
+          (identifier))))))
+
+===
+Function definition with multiple arguments and return value
+===
+
+a = terra(x: T, y: U): [f(S)] end
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (terra_function_definition
+        (terra_function_parameters
+          (identifier)
+          (identifier)
+          (identifier)
+          (identifier)
+          (escape_expression
+            (function_call
+              (identifier)
+              (arguments
+                (identifier)))))))))
+
+===
+Empty terra function implementation
+===
+
+terra f()
+end
+
+---
+
+(chunk
+  (terra_function_implementation
+    (identifier)
+    (terra_function_parameters)))
+
+===
+Terra function implementation with arguments
+===
+
+terra f(x: T)
+
+end
+
+---
+
+(chunk
+  (terra_function_implementation
+    (identifier)
+    (terra_function_parameters
+      (identifier)
+      (identifier))))
+
+===
+Terra function implementation with arguments and return
+===
+
+terra f(x: T): S
+
+end
+
+---
+
+(chunk
+  (terra_function_implementation
+    (identifier)
+    (terra_function_parameters
+      (identifier)
+      (identifier)
+      (identifier))))
+
+===
+Struct method implementation
+===
+
+terra A:f(x: T, y: U): S
+
+end
+
+---
+
+(chunk
+  (terra_function_implementation
+    (method_index_expression
+      (identifier)
+      (identifier))
+    (terra_function_parameters
+      (identifier)
+      (identifier)
+      (identifier)
+      (identifier)
+      (identifier))))
+
+===
+Terra function as table entry
+===
+
+terra A.f(x: T, y: S, z: U): W
+
+end
+
+---
+
+(chunk
+  (terra_function_implementation
+    (dot_index_expression
+      (identifier)
+      (identifier))
+    (terra_function_parameters
+      (identifier)
+      (identifier)
+      (identifier)
+      (identifier)
+      (identifier)
+      (identifier)
+      (identifier))))
+
+===
+Empty local terra function
+===
+
+local terra f()
+
+end
+
+---
+
+(chunk
+  (terra_local_function_implementation
+    (identifier)
+    (terra_function_parameters)))
+
+===
+Local terra function with metaprogramming
+===
+
+local terra [f(A)](x: T): S
+end
+
+---
+
+(chunk
+  (terra_local_function_implementation
+    (escape_expression
+      (function_call
+        (identifier)
+        (arguments
+          (identifier))))
+    (terra_function_parameters
+      (identifier)
+      (identifier)
+      (identifier))))
+
+===
+Cast
+===
+
+a = [T](b)
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (function_call
+        (escape_expression
+          (identifier))
+        (arguments
+          (identifier))))))

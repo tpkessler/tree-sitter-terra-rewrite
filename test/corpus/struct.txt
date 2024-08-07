@@ -157,3 +157,23 @@ struct A {
     (identifier)
     (identifier)))
 
+===
+Struct with base class
+===
+
+struct A(B) {
+	x: T
+	y: S
+}
+
+---
+
+(chunk
+  (struct_declaration
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)))
+

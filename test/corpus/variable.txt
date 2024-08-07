@@ -74,3 +74,21 @@ var a: T, b: S = c, d
     (identifier)
     (identifier)))
 
+===
+Overloaded call in assignment
+===
+
+x(i, j) = a
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (function_call
+        (identifier)
+        (arguments
+          (identifier)
+          (identifier))))
+    (expression_list
+      (identifier))))

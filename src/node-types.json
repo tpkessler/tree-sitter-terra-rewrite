@@ -28,6 +28,14 @@
         "named": true
       },
       {
+        "type": "terra_function_implementation",
+        "named": true
+      },
+      {
+        "type": "terra_local_function_implementation",
+        "named": true
+      },
+      {
         "type": "terra_var_definition",
         "named": true
       },
@@ -91,6 +99,10 @@
       },
       {
         "type": "table_constructor",
+        "named": true
+      },
+      {
+        "type": "terra_function_definition",
         "named": true
       },
       {
@@ -187,6 +199,10 @@
       },
       {
         "type": "dot_index_expression",
+        "named": true
+      },
+      {
+        "type": "function_call",
         "named": true
       },
       {
@@ -308,10 +324,6 @@
         "required": true,
         "types": [
           {
-            "type": "function_call",
-            "named": true
-          },
-          {
             "type": "parenthesized_expression",
             "named": true
           },
@@ -420,10 +432,6 @@
         "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "function_call",
-            "named": true
-          },
           {
             "type": "parenthesized_expression",
             "named": true
@@ -722,12 +730,8 @@
       },
       "name": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
-          {
-            "type": "function_call",
-            "named": true
-          },
           {
             "type": "method_index_expression",
             "named": true
@@ -742,6 +746,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_expression",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -914,6 +928,16 @@
     "type": "local_struct_declaration",
     "named": true,
     "fields": {
+      "base": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
       "body": {
         "multiple": true,
         "required": false,
@@ -999,10 +1023,6 @@
         "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "function_call",
-            "named": true
-          },
           {
             "type": "parenthesized_expression",
             "named": true
@@ -1202,6 +1222,16 @@
     "type": "struct_declaration",
     "named": true,
     "fields": {
+      "base": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
       "body": {
         "multiple": true,
         "required": false,
@@ -1342,6 +1372,156 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "terra_function_definition",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "parameters": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "terra_function_parameters",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "terra_function_implementation",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "dot_index_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "method_index_expression",
+            "named": true
+          }
+        ]
+      },
+      "parameters": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "terra_function_parameters",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "terra_function_parameters",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "escape_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "terra_local_function_implementation",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "escape_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "parameters": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "terra_function_parameters",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
