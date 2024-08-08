@@ -68,3 +68,24 @@ a = `b
     (expression_list
       (short_quote_expression
         (identifier)))))
+
+===
+Quote declaration
+===
+
+a = quote var x: T = 1 end
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (quote_expression
+        (terra_var_definition
+          (terra_declaration
+            (identifier)
+            (identifier))
+          (number))))))
+

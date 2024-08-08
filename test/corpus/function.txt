@@ -159,7 +159,7 @@ local terra a :: {} -> {}
 ---
 
 (chunk
-  (local_terra_function_declaration
+  (terra_function_declaration
     (identifier)
     (function_pointer_expression
       (table_constructor)
@@ -353,7 +353,7 @@ end
 ---
 
 (chunk
-  (terra_local_function_implementation
+  (terra_function_implementation
     (identifier)
     (terra_function_parameters)))
 
@@ -367,7 +367,7 @@ end
 ---
 
 (chunk
-  (terra_local_function_implementation
+  (terra_function_implementation
     (escape_expression
       (function_call
         (identifier)
@@ -396,3 +396,20 @@ a = [T](b)
           (identifier))
         (arguments
           (identifier))))))
+
+===
+Terra function metaprogrammed
+===
+
+terra f([args])
+
+end
+
+---
+
+(chunk
+  (terra_function_implementation
+    (identifier)
+    (terra_function_parameters
+      (escape_expression
+        (identifier)))))

@@ -16,21 +16,33 @@ module.exports = grammar(lua, {
     // they can also be a variable and thus appear on the left hand
     // site of an assignment statement.
     [$.expression, $.variable],
+    // Escapes are expression but can also expand to variables
+    [$.statement, $.variable],
+    [$.struct_declaration, $.struct_definition],
+    [$._local_struct_declaration, $._local_struct_definition],
   ],
 
   rules: {
+
+    defer_statement: ($) => seq(
+      'defer',
+      $.expression
+    ),
+
     quote_expression: ($) => seq(
       'quote',
       optional(choice(
         $.full_quote_statement,
-        $.expression,
+        $.identifier,
+        $._block,
       )),
       'end'
     ),
+
     full_quote_statement: ($) => seq(
       field('body', optional_block($)),
       'in',
-      $.expression,
+      $._expression_list,
     ),
 
     short_quote_expression: ($) => seq(
@@ -56,7 +68,7 @@ module.exports = grammar(lua, {
       $.expression
     ),
 
-    local_terra_function_declaration: ($) => seq(
+    _local_terra_function_declaration: ($) => seq(
       'local',
       'terra',
       $.identifier,
@@ -75,7 +87,7 @@ module.exports = grammar(lua, {
       $._terra_function_body
     ),
 
-    terra_local_function_implementation: ($) => seq(
+    _local_terra_function_implementation: ($) => seq(
       'local',
       'terra',
       field('name', choice($.identifier, $.escape_expression)),
@@ -99,7 +111,7 @@ module.exports = grammar(lua, {
     ),
 
     _terra_parameter_list: ($) => list_seq(
-      $._typed_declaration,
+      choice($._typed_declaration, $.escape_expression),
       ',',
     ),
 
@@ -107,6 +119,15 @@ module.exports = grammar(lua, {
       '[',
       $.expression,
       ']'
+    ),
+
+    dot_index_expression: ($, original) => choice(
+      original,
+      seq(
+        field('table', $._prefix_expression),
+        '.',
+        $.escape_expression
+      )
     ),
 
     _terra_variable: ($) => choice(
@@ -149,50 +170,66 @@ module.exports = grammar(lua, {
       $.expression
     ),
 
-    _union_body: ($) => list_seq(
+    union_declaration: ($) => seq(
+      'union',
+      $._union_body
+    ),
+
+    _union_body: ($) => seq(
+      '{',
+      list_seq(
         $._typed_declaration,
         /[,\n]/,
         true
-    ),
-
-    union_declaration: ($) => seq(
-      'union',
-      '{',
-      $._union_body,
+      ),
       '}'
     ),
 
-    _struct_body: ($) => list_seq(
-      choice($.union_declaration, $._typed_declaration),
-      /[,\n]/,
-      true
-    ),
-
     struct_declaration: ($) => seq(
-        'struct',
-        field('name', $._function_name),
-        optional(seq(
-          '(',
-          field('base', $.identifier),
-          ')'
-        )),
-        '{',
-        optional(field('body', $._struct_body)),
-        '}'
+      'struct',
+      field('name', $._function_name)
     ),
 
-    local_struct_declaration: ($) => seq(
-        'local',
-        'struct',
-        field('name', $.identifier),
-        optional(seq(
-          '(',
-          field('base', $.identifier),
-          ')'
-        )),
-        '{',
-        optional(field('body', $._struct_body)),
-        '}'
+    _local_struct_declaration: ($) => seq(
+      'local',
+      'struct',
+      field('name', $.identifier)
+    ),
+
+    anon_struct_definition: ($) => seq(
+      'struct',
+      $._struct_body
+    ),
+
+    struct_definition: ($) => seq(
+      'struct',
+      field('name', $._function_name),
+      optional($.base_struct),
+      $._struct_body
+    ),
+
+    _local_struct_definition: ($) => seq(
+      'local',
+      'struct',
+      field('name', choice($.identifier, $.escape_expression)),
+      optional($.base_struct),
+      $._struct_body
+    ),
+
+    _struct_body: ($) => seq(
+      '{',
+      field('body', optional(list_seq(
+        choice($.union_declaration, $._typed_declaration),
+        /[,\n]/,
+        true
+      ))),
+      '}'
+    ),
+
+    base_struct: ($) => seq(
+      '(',
+      $._function_name,
+      ')'
     ),
 
     expression: ($, original) => choice(
@@ -202,10 +239,12 @@ module.exports = grammar(lua, {
       $.escape_expression,
       $.function_pointer_expression,
       $.terra_function_definition,
+      alias($.anon_struct_definition, $.struct_definition),
     ),
 
     statement: ($, original) => choice(
       original,
+      $.defer_statement,
       $.escape_expression,
       $.escape_statement,
       $.emit_statement,
@@ -216,16 +255,19 @@ module.exports = grammar(lua, {
       $.terra_declaration,
       $.terra_var_definition,
       $.terra_function_declaration,
-      $.local_terra_function_declaration,
+      alias($._local_terra_function_declaration, $.terra_function_declaration),
       $.struct_declaration,
-      $.local_struct_declaration,
+      alias($._local_struct_declaration, $.struct_declaration),
       $.terra_function_implementation,
-      $.terra_local_function_implementation,
+      alias($._local_terra_function_implementation, $.terra_function_implementation),
+      $.struct_definition,
+      alias($._local_struct_definition, $.struct_definition)
     ),
 
     variable: ($, original) => choice(
       original,
       $.function_call,
+      $.escape_expression,
     ),
 
     primitive_type: _ => token(choice(

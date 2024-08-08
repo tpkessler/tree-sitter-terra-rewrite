@@ -1,5 +1,5 @@
 ===
-Empty struct declaration
+Empty struct definition
 ===
 
 struct A {}
@@ -7,7 +7,7 @@ struct A {}
 ---
 
 (chunk
-  (struct_declaration
+  (struct_definition
     (identifier)))
 
 ===
@@ -19,7 +19,7 @@ local struct A {}
 ---
 
 (chunk
-  (local_struct_declaration
+  (struct_definition
     (identifier)))
 
 ===
@@ -33,7 +33,7 @@ struct A {
 ---
 
 (chunk
-  (struct_declaration
+  (struct_definition
     (identifier)
     (identifier)
     (identifier)))
@@ -50,7 +50,7 @@ struct A {
 ---
 
 (chunk
-  (struct_declaration
+  (struct_definition
     (identifier)
     (identifier)
     (identifier)
@@ -66,7 +66,7 @@ struct A {a: T, b: S}
 ---
 
 (chunk
-  (struct_declaration
+  (struct_definition
     (identifier)
     (identifier)
     (identifier)
@@ -84,7 +84,7 @@ local struct A {
 ---
 
 (chunk
-  (local_struct_declaration
+  (struct_definition
     (identifier)
     (identifier)
     (identifier)))
@@ -101,7 +101,7 @@ struct S.A {
 ---
 
 (chunk
-  (struct_declaration
+  (struct_definition
     (dot_index_expression
       (identifier)
       (identifier))
@@ -124,7 +124,7 @@ struct A {
 ---
 
 (chunk
-  (struct_declaration
+  (struct_definition
     (identifier)
     (union_declaration
       (identifier)
@@ -147,7 +147,7 @@ struct A {
 ---
 
 (chunk
-  (struct_declaration
+  (struct_definition
     (identifier)
     (union_declaration
       (identifier)
@@ -169,11 +169,115 @@ struct A(B) {
 ---
 
 (chunk
-  (struct_declaration
+  (struct_definition
     (identifier)
-    (identifier)
+	(base_struct
+          (identifier))
     (identifier)
     (identifier)
     (identifier)
     (identifier)))
 
+===
+Struct with base class from table
+===
+
+struct A(C.B){
+	re: T
+	im: T
+}
+
+---
+
+(chunk
+  (struct_definition
+    (identifier)
+	(base_struct
+          (dot_index_expression
+            (identifier)
+            (identifier)))
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)))
+
+===
+Local struct with base class from table
+===
+
+local struct A(C.B){
+	re: T
+	im: T
+}
+
+---
+
+(chunk
+  (struct_definition
+    (identifier)
+	(base_struct
+          (dot_index_expression
+            (identifier)
+            (identifier)))
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)))
+
+===
+Struct declaration
+===
+
+struct A
+
+---
+
+(chunk
+  (struct_declaration
+    (identifier)))
+
+===
+Local struct declaration
+===
+
+local struct A
+
+---
+
+(chunk
+  (struct_declaration
+    (identifier)))
+
+===
+Empty anon struct
+===
+
+a = struct {}
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (struct_definition))))
+
+===
+Anon struct
+===
+
+a = struct {x: T, y: S}
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (struct_definition
+        (identifier)
+        (identifier)
+        (identifier)
+        (identifier)))))
