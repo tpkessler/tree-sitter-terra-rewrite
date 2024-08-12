@@ -413,3 +413,42 @@ end
     (terra_function_parameters
       (escape_expression
         (identifier)))))
+
+===
+Terra function vararg
+===
+
+terra f(...)
+
+end
+
+---
+
+(chunk
+  (terra_function_implementation
+    (identifier)
+    (terra_function_parameters
+      (vararg_expression))))
+
+===
+Terra function mixed with vararg
+===
+
+terra f(x: T, y: S, ...): R
+
+end
+
+---
+
+(chunk
+  (terra_function_implementation
+    (identifier)
+    (terra_function_parameters
+      (identifier)
+      (identifier)
+      (identifier)
+      (identifier)
+      (vararg_expression)
+      (identifier))))
+
+

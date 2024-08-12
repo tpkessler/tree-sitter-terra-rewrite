@@ -281,3 +281,34 @@ a = struct {x: T, y: S}
         (identifier)
         (identifier)
         (identifier)))))
+
+===
+Nested union
+===
+
+struct A {
+  union{
+    union{
+      x: int
+      y: float
+    }
+    z: uint
+  }
+  w: double
+}
+
+---
+
+(chunk
+  (struct_definition
+    (identifier)
+    (union_declaration
+      (union_declaration
+        (identifier)
+        (identifier)
+        (identifier)
+        (identifier))
+      (identifier)
+      (identifier))
+    (identifier)
+    (identifier)))

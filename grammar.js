@@ -50,6 +50,24 @@ module.exports = grammar(lua, {
       $.expression,
     ),
 
+    escape_expression: ($) => seq(
+      '[',
+      $.expression,
+      ']'
+    ),
+
+    for_numeric_clause: ($, original) => choice(
+      original,
+      seq(
+        field('name', $.escape_expression),
+        '=',
+        field('start', $.expression),
+        ',',
+        field('end', $.expression),
+        optional(seq(',', field('step', $.expression)))
+      )
+    ),
+
     // The value of 99 is too high. But we also don't mix
     // lua code with a terra function pointer.
     // All arguments are terra types.
@@ -110,15 +128,12 @@ module.exports = grammar(lua, {
       ))
     ),
 
-    _terra_parameter_list: ($) => list_seq(
-      choice($._typed_declaration, $.escape_expression),
-      ',',
-    ),
-
-    escape_expression: ($) => seq(
-      '[',
-      $.expression,
-      ']'
+    _terra_parameter_list: ($) => choice(
+      seq(
+        list_seq(choice($._typed_declaration, $.escape_expression), ','),
+        optional(seq(',', $.vararg_expression))
+      ),
+      $.vararg_expression
     ),
 
     dot_index_expression: ($, original) => choice(
@@ -178,7 +193,7 @@ module.exports = grammar(lua, {
     _union_body: ($) => seq(
       '{',
       list_seq(
-        $._typed_declaration,
+        choice($._typed_declaration, $.union_declaration),
         /[,\n]/,
         true
       ),

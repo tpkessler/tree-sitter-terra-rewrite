@@ -683,6 +683,10 @@
         "required": true,
         "types": [
           {
+            "type": "escape_expression",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           }
@@ -1532,7 +1536,7 @@
     "fields": {
       "name": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "escape_expression",
@@ -1546,7 +1550,7 @@
       },
       "type": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "expression",
@@ -1554,6 +1558,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "union_declaration",
+          "named": true
+        }
+      ]
     }
   },
   {
