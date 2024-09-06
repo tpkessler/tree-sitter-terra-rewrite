@@ -1,8 +1,6 @@
 {
-  "0": "l",
-  "1": "u",
-  "2": "a",
   "name": "terra",
+  "inherits": "lua",
   "word": "identifier",
   "rules": {
     "chunk": {
@@ -1316,6 +1314,10 @@
               "name": "unary_expression"
             }
           ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "primitive_type"
         },
         {
           "type": "SYMBOL",
@@ -4168,6 +4170,10 @@
           {
             "type": "STRING",
             "value": "bool"
+          },
+          {
+            "type": "STRING",
+            "value": "rawstring"
           },
           {
             "type": "STRING",

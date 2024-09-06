@@ -78,6 +78,10 @@
         "named": true
       },
       {
+        "type": "primitive_type",
+        "named": true
+      },
+      {
         "type": "quote_expression",
         "named": true
       },

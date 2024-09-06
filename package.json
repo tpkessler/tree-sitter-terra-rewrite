@@ -1,16 +1,20 @@
 {
-  "name": "tree-sitter-terra-rewrite",
-  "version": "0.0.1",
-  "description": "TerraRewrite grammar for tree-sitter",
-  "repository": "github:tree-sitter/tree-sitter-terra-rewrite",
+  "name": "tree-sitter-terra",
+  "version": "0.1.0",
+  "description": "Terra grammar for tree-sitter",
+  "repository": "github:tpkessler/tree-sitter-terra-rewrite",
   "license": "MIT",
+  "author": "Torsten Keßler",
+  "maintainers": [
+    "Torsten Keßler <t.kessler@posteo.de>"
+  ],
   "main": "bindings/node",
   "types": "bindings/node",
   "keywords": [
     "incremental",
     "parsing",
     "tree-sitter",
-    "terra_rewrite"
+    "ruby"
   ],
   "files": [
     "grammar.js",
@@ -21,12 +25,8 @@
     "src/**"
   ],
   "dependencies": {
-    "node-addon-api": "^7.1.0",
-    "node-gyp-build": "^4.8.0"
-  },
-  "devDependencies": {
-    "prebuildify": "^6.0.0",
-    "tree-sitter-cli": "^0.22.6"
+    "node-addon-api": "^8.1.0",
+    "node-gyp-build": "^4.8.2"
   },
   "peerDependencies": {
     "tree-sitter": "^0.21.0"
@@ -36,18 +36,37 @@
       "optional": true
     }
   },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.23.0",
+    "tree-sitter-lua": "^0.1.0",
+    "prebuildify": "^6.0.1"
+  },
   "scripts": {
     "install": "node-gyp-build",
-    "prebuildify": "prebuildify --napi --strip",
-    "build": "tree-sitter generate --no-bindings",
-    "build-wasm": "tree-sitter build --wasm",
-    "test": "tree-sitter test",
-    "parse": "tree-sitter parse"
+    "lint": "eslint grammar.js",
+    "prestart": "tree-sitter build --wasm",
+    "start": "tree-sitter playground",
+    "test": "node --test bindings/node/*_test.js"
   },
   "tree-sitter": [
     {
-      "scope": "source.terra_rewrite",
-      "injection-regex": "^terra_rewrite$"
+      "scope": "source.terra",
+      "file-types": [
+        "t"
+      ],
+      "injection-regex": "^terra$",
+      "highlights": [
+        "queries/highlights.scm",
+        "node_modules/tree-sitter-lua/queries/highlights.scm"
+      ],
+      "tags": [
+        "queries/tags.scm",
+        "node_modules/tree-sitter-lua/queries/tags.scm"
+      ],
+      "injections": [
+        "queries/injections.scm",
+        "node_modules/tree-sitter-lua/queries/injections.scm"
+      ]
     }
   ]
 }

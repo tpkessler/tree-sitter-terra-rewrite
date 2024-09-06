@@ -249,6 +249,7 @@ module.exports = grammar(lua, {
 
     expression: ($, original) => choice(
       original,
+      $.primitive_type,
       $.quote_expression,
       $.short_quote_expression,
       $.escape_expression,
@@ -287,6 +288,7 @@ module.exports = grammar(lua, {
 
     primitive_type: _ => token(choice(
       'bool',
+      'rawstring',
       'int',
       'float',
       'double',
