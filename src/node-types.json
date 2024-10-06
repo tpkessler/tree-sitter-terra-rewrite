@@ -1056,6 +1056,30 @@
     }
   },
   {
+    "type": "pointer_type",
+    "named": true,
+    "fields": {
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "pointer_type",
+            "named": true
+          },
+          {
+            "type": "primitive_type",
+            "named": true
+          },
+          {
+            "type": "type_identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "quote_expression",
     "named": true,
     "fields": {},
@@ -1242,11 +1266,23 @@
             "named": false
           },
           {
-            "type": "expression",
+            "type": "escape_expression",
             "named": true
           },
           {
             "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "pointer_type",
+            "named": true
+          },
+          {
+            "type": "primitive_type",
+            "named": true
+          },
+          {
+            "type": "type_identifier",
             "named": true
           },
           {
@@ -1282,7 +1318,15 @@
         "required": false,
         "types": [
           {
-            "type": "expression",
+            "type": "pointer_type",
+            "named": true
+          },
+          {
+            "type": "primitive_type",
+            "named": true
+          },
+          {
+            "type": "type_identifier",
             "named": true
           }
         ]
@@ -1337,7 +1381,15 @@
         "required": false,
         "types": [
           {
-            "type": "expression",
+            "type": "pointer_type",
+            "named": true
+          },
+          {
+            "type": "primitive_type",
+            "named": true
+          },
+          {
+            "type": "type_identifier",
             "named": true
           }
         ]
@@ -1482,7 +1534,15 @@
         "required": false,
         "types": [
           {
-            "type": "expression",
+            "type": "pointer_type",
+            "named": true
+          },
+          {
+            "type": "primitive_type",
+            "named": true
+          },
+          {
+            "type": "type_identifier",
             "named": true
           }
         ]
@@ -1557,7 +1617,15 @@
         "required": false,
         "types": [
           {
-            "type": "expression",
+            "type": "pointer_type",
+            "named": true
+          },
+          {
+            "type": "primitive_type",
+            "named": true
+          },
+          {
+            "type": "type_identifier",
             "named": true
           }
         ]
@@ -1907,6 +1975,10 @@
   },
   {
     "type": "true",
+    "named": true
+  },
+  {
+    "type": "type_identifier",
     "named": true
   },
   {

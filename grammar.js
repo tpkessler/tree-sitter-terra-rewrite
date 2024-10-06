@@ -22,6 +22,8 @@ module.exports = grammar(lua, {
     [$._local_struct_declaration, $._local_struct_definition],
   ],
 
+  word: ($) => $.identifier,
+
   rules: {
 
     defer_statement: ($) => seq(
@@ -153,7 +155,7 @@ module.exports = grammar(lua, {
     _typed_declaration: ($) => seq(
       field('name', $._terra_variable),
       ':',
-      field('type', $.expression)
+      field('type', $._type_specifier)
     ),
 
     terra_declaration: ($) => seq(
@@ -286,10 +288,27 @@ module.exports = grammar(lua, {
       $.escape_expression,
     ),
 
+    _type_specifier: ($) => prec.dynamic(1,choice(
+      // $.function_call,
+      // $.bracket_index_expression,
+      // $.dot_index_expression,
+      // $.binary_expression,
+      // $.unary_expression,
+      $.pointer_type,
+      $._type_identifier,
+      $.primitive_type,
+    )),
+
+    pointer_type: ($) => seq(
+      '&',
+      field('type', $._type_specifier),
+    ),
+
     primitive_type: _ => token(choice(
       'bool',
       'rawstring',
       'int',
+      'uint',
       'float',
       'double',
       'opaque',
@@ -297,9 +316,14 @@ module.exports = grammar(lua, {
       ...[8, 16, 32, 64].map(n => `uint${n}`),
     )),
 
-    type_specifier: ($) => choice(
-      $.primitive_type,
+    
+    _type_identifier: ($) => alias(
+      $.same_identifier,
+      $.type_identifier,
     ),
+
+    same_identifier: (_) =>
+      /(\p{XID_Start}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})(\p{XID_Continue}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})*/,
 
     // From the lua grammar with optional suffix for float or integer types
     number: (_) => {
@@ -339,15 +363,6 @@ module.exports = grammar(lua, {
       );
 
       return token(choice(decimal_literal, hex_literal));
-    },
-    // from the lua grammar, include '`' as an illegal token and
-    // remove & from the identifier start as it's used for pointers
-    identifier: (_) => {
-      const identifier_start =
-        /[^\p{Control}\s+\-*/%^#~`|<>=(){}\[\];:,.\\'"\d]/;
-      const identifier_continue =
-        /[^\p{Control}\s+\-*/%^#&~`|<>=(){}\[\];:,.\\'"]*/;
-      return token(seq(identifier_start, identifier_continue));
     },
   }
 });

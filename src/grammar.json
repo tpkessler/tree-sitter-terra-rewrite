@@ -3188,11 +3188,11 @@
         "members": [
           {
             "type": "PATTERN",
-            "value": "[^\\p{Control}\\s+\\-*/%^#~`|<>=(){}\\[\\];:,.\\\\'\"\\d]"
+            "value": "[^\\p{Control}\\s+\\-*/%^#&~|<>=(){}\\[\\];:,.\\\\'\"\\d]"
           },
           {
             "type": "PATTERN",
-            "value": "[^\\p{Control}\\s+\\-*/%^#&~`|<>=(){}\\[\\];:,.\\\\'\"]*"
+            "value": "[^\\p{Control}\\s+\\-*/%^#&~|<>=(){}\\[\\];:,.\\\\'\"]*"
           }
         ]
       }
@@ -3725,7 +3725,7 @@
           "name": "type",
           "content": {
             "type": "SYMBOL",
-            "name": "expression"
+            "name": "_type_specifier"
           }
         }
       ]
@@ -4162,6 +4162,44 @@
         }
       ]
     },
+    "_type_specifier": {
+      "type": "PREC_DYNAMIC",
+      "value": 1,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "pointer_type"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_type_identifier"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "primitive_type"
+          }
+        ]
+      }
+    },
+    "pointer_type": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "&"
+        },
+        {
+          "type": "FIELD",
+          "name": "type",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_type_specifier"
+          }
+        }
+      ]
+    },
     "primitive_type": {
       "type": "TOKEN",
       "content": {
@@ -4178,6 +4216,10 @@
           {
             "type": "STRING",
             "value": "int"
+          },
+          {
+            "type": "STRING",
+            "value": "uint"
           },
           {
             "type": "STRING",
@@ -4226,14 +4268,18 @@
         ]
       }
     },
-    "type_specifier": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "primitive_type"
-        }
-      ]
+    "_type_identifier": {
+      "type": "ALIAS",
+      "content": {
+        "type": "SYMBOL",
+        "name": "same_identifier"
+      },
+      "named": true,
+      "value": "type_identifier"
+    },
+    "same_identifier": {
+      "type": "PATTERN",
+      "value": "(\\p{XID_Start}|\\\\u[0-9A-Fa-f]{4}|\\\\U[0-9A-Fa-f]{8})(\\p{XID_Continue}|\\\\u[0-9A-Fa-f]{4}|\\\\U[0-9A-Fa-f]{8})*"
     }
   },
   "extras": [
