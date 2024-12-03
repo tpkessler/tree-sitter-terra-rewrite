@@ -1,0 +1,51 @@
+{
+  "grammars": [
+    {
+      "name": "terra",
+      "camelcase": "Terra",
+      "scope": "source.terra",
+      "path": ".",
+      "file-types": [
+        "t"
+      ],
+      "highlights": [
+        "queries/highlights.scm",
+        "node_modules/tree-sitter-lua/queries/highlights.scm"
+      ],
+      "injections": [
+        "queries/injections.scm",
+        "node_modules/tree-sitter-lua/queries/injections.scm"
+      ],
+      "tags": [
+        "queries/tags.scm",
+        "node_modules/tree-sitter-lua/queries/tags.scm"
+      ],
+      "injection-regex": "^terra$"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Terra grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "Torsten Keßler"
+      },
+      {
+        "name": "Torsten Keßler",
+        "email": "t.kessler@posteo.de"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/tpkessler/tree-sitter-terra-rewrite"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true
+  }
+}

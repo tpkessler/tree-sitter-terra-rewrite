@@ -1,4 +1,5 @@
 {
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "terra",
   "inherits": "lua",
   "word": "identifier",
@@ -1314,6 +1315,14 @@
               "name": "unary_expression"
             }
           ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "reference"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "dereference"
         },
         {
           "type": "SYMBOL",
@@ -3182,20 +3191,8 @@
       }
     },
     "identifier": {
-      "type": "TOKEN",
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "PATTERN",
-            "value": "[^\\p{Control}\\s+\\-*/%^#&~|<>=(){}\\[\\];:,.\\\\'\"\\d]"
-          },
-          {
-            "type": "PATTERN",
-            "value": "[^\\p{Control}\\s+\\-*/%^#&~|<>=(){}\\[\\];:,.\\\\'\"]*"
-          }
-        ]
-      }
+      "type": "PATTERN",
+      "value": "(\\p{XID_Start}|\\\\u[0-9A-Fa-f]{4}|\\\\U[0-9A-Fa-f]{8})(\\p{XID_Continue}|\\\\u[0-9A-Fa-f]{4}|\\\\U[0-9A-Fa-f]{8})*"
     },
     "comment": {
       "type": "CHOICE",
@@ -4162,6 +4159,32 @@
         }
       ]
     },
+    "reference": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "&"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expression"
+        }
+      ]
+    },
+    "dereference": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "@"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expression"
+        }
+      ]
+    },
     "_type_specifier": {
       "type": "PREC_DYNAMIC",
       "value": 1,
@@ -4272,14 +4295,10 @@
       "type": "ALIAS",
       "content": {
         "type": "SYMBOL",
-        "name": "same_identifier"
+        "name": "identifier"
       },
       "named": true,
       "value": "type_identifier"
-    },
-    "same_identifier": {
-      "type": "PATTERN",
-      "value": "(\\p{XID_Start}|\\\\u[0-9A-Fa-f]{4}|\\\\U[0-9A-Fa-f]{8})(\\p{XID_Continue}|\\\\u[0-9A-Fa-f]{4}|\\\\U[0-9A-Fa-f]{8})*"
     }
   },
   "extras": [

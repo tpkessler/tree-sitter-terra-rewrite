@@ -46,6 +46,10 @@
         "named": true
       },
       {
+        "type": "dereference",
+        "named": true
+      },
+      {
         "type": "escape_expression",
         "named": true
       },
@@ -83,6 +87,10 @@
       },
       {
         "type": "quote_expression",
+        "named": true
+      },
+      {
+        "type": "reference",
         "named": true
       },
       {
@@ -369,6 +377,7 @@
   {
     "type": "chunk",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -431,6 +440,21 @@
   },
   {
     "type": "defer_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "dereference",
     "named": true,
     "fields": {},
     "children": {
@@ -1101,6 +1125,21 @@
         },
         {
           "type": "statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "reference",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
           "named": true
         }
       ]
@@ -1823,6 +1862,10 @@
   },
   {
     "type": ">>",
+    "named": false
+  },
+  {
+    "type": "@",
     "named": false
   },
   {

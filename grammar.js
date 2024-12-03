@@ -249,8 +249,20 @@ module.exports = grammar(lua, {
       ')'
     ),
 
+    reference: ($) => seq(
+      '&',
+      $.expression,
+    ),
+
+    dereference: ($) => seq(
+      '@',
+      $.expression,
+    ),
+
     expression: ($, original) => choice(
       original,
+      $.reference,
+      $.dereference,
       $.primitive_type,
       $.quote_expression,
       $.short_quote_expression,
@@ -288,7 +300,7 @@ module.exports = grammar(lua, {
       $.escape_expression,
     ),
 
-    _type_specifier: ($) => prec.dynamic(1,choice(
+    _type_specifier: ($) => prec.dynamic(1, choice(
       // $.function_call,
       // $.bracket_index_expression,
       // $.dot_index_expression,
@@ -318,11 +330,11 @@ module.exports = grammar(lua, {
 
     
     _type_identifier: ($) => alias(
-      $.same_identifier,
+      $.identifier,
       $.type_identifier,
     ),
 
-    same_identifier: (_) =>
+    identifier: (_) =>
       /(\p{XID_Start}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})(\p{XID_Continue}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})*/,
 
     // From the lua grammar with optional suffix for float or integer types

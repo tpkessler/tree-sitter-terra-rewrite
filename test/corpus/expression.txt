@@ -1,0 +1,68 @@
+===
+Variable reference
+===
+
+a = &b
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (reference
+        (identifier)))))
+
+===
+Variable dereference
+===
+
+a = @b
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (dereference
+        (identifier)))))
+
+===
+Nested Variable reference
+===
+
+a = &&&b
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (reference
+        (reference
+          (reference
+            (identifier)))))))
+
+===
+Mixed Variable reference/dereference
+===
+
+a = &@&b
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (identifier))
+    (expression_list
+      (reference
+        (dereference
+          (reference
+            (identifier)))))))
+
