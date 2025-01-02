@@ -1,4 +1,4 @@
-const lua = require('tree-sitter-lua/grammar')
+const lua = require('@tree-sitter-grammars/tree-sitter-lua/grammar')
 
 // copied from the lua grammar
 const list_seq = (rule, separator, trailing_separator = false) =>
