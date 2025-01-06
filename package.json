@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "tree-sitter-cli": "^0.23.0",
-    "tree-sitter-lua": "^0.1.0",
+    "@tree-sitter-grammars/tree-sitter-lua": "^0.1.0",
     "prebuildify": "^6.0.1"
   },
   "scripts": {
@@ -46,6 +46,16 @@
     "lint": "eslint grammar.js",
     "prestart": "tree-sitter build --wasm",
     "start": "tree-sitter playground",
-    "test": "node --test bindings/node/*_test.js"
-  }
+    "test": "node --test bindings/node/*_test.js",
+    "prebuildify": "prebuildify --napi --strip"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.t",
+      "injection-regex": "^terra$",
+      "file-types": [
+        "t"
+      ]
+    }
+  ]
 }
