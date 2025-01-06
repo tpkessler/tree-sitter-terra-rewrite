@@ -589,10 +589,21 @@
   {
     "type": "escape_expression",
     "named": true,
-    "fields": {},
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "expression",
@@ -1088,6 +1099,14 @@
         "required": true,
         "types": [
           {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
             "type": "pointer_type",
             "named": true
           },
@@ -1096,7 +1115,15 @@
             "named": true
           },
           {
-            "type": "type_identifier",
+            "type": "table_constructor",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "variable",
             "named": true
           }
         ]
@@ -1305,11 +1332,11 @@
             "named": false
           },
           {
-            "type": "escape_expression",
+            "type": "binary_expression",
             "named": true
           },
           {
-            "type": "identifier",
+            "type": "parenthesized_expression",
             "named": true
           },
           {
@@ -1321,11 +1348,19 @@
             "named": true
           },
           {
-            "type": "type_identifier",
+            "type": "table_constructor",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
             "named": true
           },
           {
             "type": "union_declaration",
+            "named": true
+          },
+          {
+            "type": "variable",
             "named": true
           }
         ]
@@ -1357,6 +1392,14 @@
         "required": false,
         "types": [
           {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
             "type": "pointer_type",
             "named": true
           },
@@ -1365,7 +1408,15 @@
             "named": true
           },
           {
-            "type": "type_identifier",
+            "type": "table_constructor",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "variable",
             "named": true
           }
         ]
@@ -1420,6 +1471,14 @@
         "required": false,
         "types": [
           {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
             "type": "pointer_type",
             "named": true
           },
@@ -1428,7 +1487,15 @@
             "named": true
           },
           {
-            "type": "type_identifier",
+            "type": "table_constructor",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "variable",
             "named": true
           }
         ]
@@ -1573,6 +1640,14 @@
         "required": false,
         "types": [
           {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
             "type": "pointer_type",
             "named": true
           },
@@ -1581,7 +1656,15 @@
             "named": true
           },
           {
-            "type": "type_identifier",
+            "type": "table_constructor",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "variable",
             "named": true
           }
         ]
@@ -1656,6 +1739,14 @@
         "required": false,
         "types": [
           {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
             "type": "pointer_type",
             "named": true
           },
@@ -1664,7 +1755,15 @@
             "named": true
           },
           {
-            "type": "type_identifier",
+            "type": "table_constructor",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "variable",
             "named": true
           }
         ]
@@ -2018,10 +2117,6 @@
   },
   {
     "type": "true",
-    "named": true
-  },
-  {
-    "type": "type_identifier",
     "named": true
   },
   {

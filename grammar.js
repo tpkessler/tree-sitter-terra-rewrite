@@ -267,6 +267,7 @@ module.exports = grammar(lua, {
       $.quote_expression,
       $.short_quote_expression,
       $.escape_expression,
+      alias($.escape_statement, $.escape_expression),
       $.function_pointer_expression,
       $.terra_function_definition,
       alias($.anon_struct_definition, $.struct_definition),
@@ -300,16 +301,16 @@ module.exports = grammar(lua, {
       $.escape_expression,
     ),
 
-    _type_specifier: ($) => prec.dynamic(1, choice(
-      // $.function_call,
-      // $.bracket_index_expression,
-      // $.dot_index_expression,
-      // $.binary_expression,
-      // $.unary_expression,
+    _type_specifier: ($) => choice(
       $.pointer_type,
-      $._type_identifier,
       $.primitive_type,
-    )),
+      // lua expressions that can appear as type specifier
+      $.variable,
+      $.parenthesized_expression,
+      $.table_constructor,
+      $.binary_expression,
+      $.unary_expression
+    ),
 
     pointer_type: ($) => seq(
       '&',
@@ -328,14 +329,14 @@ module.exports = grammar(lua, {
       ...[8, 16, 32, 64].map(n => `uint${n}`),
     )),
 
-    
-    _type_identifier: ($) => alias(
-      $.identifier,
-      $.type_identifier,
-    ),
-
-    identifier: (_) =>
-      /(\p{XID_Start}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})(\p{XID_Continue}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})*/,
+    // From the lua grammar, with the short quote "`" and the dereferencing "@"
+    identifier: (_) => {
+      const identifier_start =
+        /[^\p{Control}\s+\-*/%^#&@~|<>=(){}\[\];:,.\\'`"\d]/;
+      const identifier_continue =
+        /[^\p{Control}\s+\-*/%^#&@~|<>=(){}\[\];:,.\\'`"]*/;
+      return token(seq(identifier_start, identifier_continue));
+    },
 
     // From the lua grammar with optional suffix for float or integer types
     number: (_) => {

@@ -1341,6 +1341,15 @@
           "name": "escape_expression"
         },
         {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "escape_statement"
+          },
+          "named": true,
+          "value": "escape_expression"
+        },
+        {
           "type": "SYMBOL",
           "name": "function_pointer_expression"
         },
@@ -3191,8 +3200,20 @@
       }
     },
     "identifier": {
-      "type": "PATTERN",
-      "value": "(\\p{XID_Start}|\\\\u[0-9A-Fa-f]{4}|\\\\U[0-9A-Fa-f]{8})(\\p{XID_Continue}|\\\\u[0-9A-Fa-f]{4}|\\\\U[0-9A-Fa-f]{8})*"
+      "type": "TOKEN",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "PATTERN",
+            "value": "[^\\p{Control}\\s+\\-*/%^#&@~|<>=(){}\\[\\];:,.\\\\'`\"\\d]"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[^\\p{Control}\\s+\\-*/%^#&@~|<>=(){}\\[\\];:,.\\\\'`\"]*"
+          }
+        ]
+      }
     },
     "comment": {
       "type": "CHOICE",
@@ -4186,25 +4207,37 @@
       ]
     },
     "_type_specifier": {
-      "type": "PREC_DYNAMIC",
-      "value": 1,
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "pointer_type"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "_type_identifier"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "primitive_type"
-          }
-        ]
-      }
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "pointer_type"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "primitive_type"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "variable"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "parenthesized_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "table_constructor"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "binary_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "unary_expression"
+        }
+      ]
     },
     "pointer_type": {
       "type": "SEQ",
@@ -4290,15 +4323,6 @@
           }
         ]
       }
-    },
-    "_type_identifier": {
-      "type": "ALIAS",
-      "content": {
-        "type": "SYMBOL",
-        "name": "identifier"
-      },
-      "named": true,
-      "value": "type_identifier"
     }
   },
   "extras": [
