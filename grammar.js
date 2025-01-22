@@ -298,6 +298,7 @@ module.exports = grammar(lua, {
     variable: ($, original) => choice(
       original,
       $.function_call,
+      $.dereference,
       $.escape_expression,
     ),
 

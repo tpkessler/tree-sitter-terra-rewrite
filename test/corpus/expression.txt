@@ -66,3 +66,21 @@ a = &@&b
           (reference
             (identifier)))))))
 
+===
+Pointer assignment
+===
+
+@a = @b + 1
+
+---
+
+(chunk
+  (assignment_statement
+    (variable_list
+      (dereference
+        (identifier)))
+    (expression_list
+      (dereference
+        (binary_expression
+          (identifier)
+          (number))))))

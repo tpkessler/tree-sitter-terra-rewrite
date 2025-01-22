@@ -210,6 +210,10 @@
         "named": true
       },
       {
+        "type": "dereference",
+        "named": true
+      },
+      {
         "type": "dot_index_expression",
         "named": true
       },
