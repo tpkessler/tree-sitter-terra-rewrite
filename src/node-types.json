@@ -962,6 +962,10 @@
       "required": true,
       "types": [
         {
+          "type": "escape_expression",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         }
@@ -1016,6 +1020,10 @@
       "multiple": false,
       "required": true,
       "types": [
+        {
+          "type": "escape_expression",
+          "named": true
+        },
         {
           "type": "identifier",
           "named": true

@@ -1,0 +1,25 @@
+===
+Goto statement
+===
+
+goto [label]
+
+---
+
+(chunk
+  (goto_statement
+    (escape_expression
+      (identifier))))
+
+===
+Label
+===
+
+::[name]::
+
+---
+
+(chunk
+  (label_statement
+    (escape_expression
+      (identifier))))

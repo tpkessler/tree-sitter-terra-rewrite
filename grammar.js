@@ -31,6 +31,16 @@ module.exports = grammar(lua, {
       $.expression
     ),
 
+    goto_statement: ($, original) => choice(
+      original,
+      seq('goto', $.escape_expression)
+    ),
+
+    label_statement: ($, original) => choice(
+      original,
+      seq('::', $.escape_expression, '::')
+    ),
+
     quote_expression: ($) => seq(
       'quote',
       optional(choice(
@@ -275,6 +285,8 @@ module.exports = grammar(lua, {
 
     statement: ($, original) => choice(
       original,
+      $.goto_statement,
+      $.label_statement,
       $.defer_statement,
       $.escape_expression,
       $.escape_statement,
